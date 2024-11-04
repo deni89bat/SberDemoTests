@@ -1,12 +1,20 @@
 package sberJazz.tests;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import sberJazz.pages.NewVideoConferenceFormPage;
+import sberJazz.pages.VideoConferencePage;
+
+import java.time.Duration;
 
 public class SalutJazzTests extends BaseTest {
     CustomAssertions customAssertions = new CustomAssertions();
+    private VideoConferencePage videoConferencePage;
+    private boolean isConferenceCreated = false; // Флаг для отслеживания создания конференции
+
 
     @Test
     @DisplayName("Создание новой видеоконференции")
@@ -33,9 +41,29 @@ public class SalutJazzTests extends BaseTest {
         customAssertions.assertButtonIsEnabled(videoConferenceFormPage.getCreateConfBtnElem(),
                 "Создать и присоединиться");
 
-        videoConferenceFormPage.createAndJoin();
+        videoConferencePage = videoConferenceFormPage.createAndJoin();
+        customAssertions.assertElementText(expectedConferenceName,
+                videoConferencePage.getConferenceName());
+        customAssertions.assertElementContainText(expectedUserName,
+                videoConferencePage.getUserName());
+        takeScreenshot(driver);
+
+        isConferenceCreated = true;
+    }
 
 
-
+    @AfterEach
+    void exitConference() {
+        if (isConferenceCreated) {
+            if (videoConferencePage != null) {
+                videoConferencePage.endConference()
+                        .confirmEndConference();
+            }
+            isConferenceCreated = false;
+        }
+        // Задержка после выполнения exitConference
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions
+                .visibilityOfElementLocated(saluteJazzMainPage.getVideoConferenceBtnLoc()));
     }
 }

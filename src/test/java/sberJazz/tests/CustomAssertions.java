@@ -15,14 +15,20 @@ public class CustomAssertions {
         Assertions.assertEquals(expectedText, actualText, "Текст элемента не совпадает");
     }
 
+    @Step("Проверка, что элемент содержит текст '{expectedText}'")
+    protected void assertElementContainText(String expectedText, String actualText) {
+        Assertions.assertTrue(actualText.contains(expectedText),
+                "Элемент должен содержать текст: '" + expectedText + "', но фактический текст: '" + actualText + "'");
+    }
+
     @Step("Проверка, что значение поля '{fieldName}' равно '{expectedValue}'")
     protected void assertFieldValue(String fieldName, String expectedValue, String actualValue) {
         Assertions.assertEquals(expectedValue, actualValue, "Значение поля " + fieldName + " не совпадает");
     }
 
-    @Step("Проверка, что элемент {elementName} отображается на странице")
-    protected void assertElementIsDisplayed(String elementName, boolean isDisplayed) {
-        Assertions.assertTrue(isDisplayed, "Элемент " + elementName + " не отображается на странице");
+    @Step("Проверка, что элемент {element} отображается на странице {pageName}")
+    protected void assertElementIsDisplayed(WebElement element, String pageName) {
+        Assertions.assertTrue(element.isDisplayed(), "Элемент " + element.getText() + " не отображается на странице");
     }
 
     @Step("Проверка, что список содержит {expectedCount} элементов")
@@ -47,7 +53,7 @@ public class CustomAssertions {
                 "В поле 'Название встречи' отображается неверное значение: " + actualConferenceName);
     }
 
-    @Step("Проверка, что заголовок формы равен '{expectedFormTitle}'")
+    @Step("Проверка, что заголовок формы: '{expectedFormTitle}'")
     protected void assertFormTitle(String expectedFormTitle, String actualFormTitle) {
         Assertions.assertEquals(expectedFormTitle, actualFormTitle,
                 "Пользователь видит неверный заголовок формы: " + actualFormTitle);

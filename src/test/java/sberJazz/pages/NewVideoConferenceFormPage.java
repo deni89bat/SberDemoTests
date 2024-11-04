@@ -1,7 +1,6 @@
 package sberJazz.pages;
 
 import io.qameta.allure.Step;
-import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -50,8 +49,9 @@ public class NewVideoConferenceFormPage {
     }
 
     @Step("Пользователь нажимает кнопку 'Создать и присоединиться'")
-    public void createAndJoin() {
+    public VideoConferencePage createAndJoin() {
         driver.findElement(createConferenceBtn).click();
+        return new VideoConferencePage(driver);
     }
 
     public WebElement getCreateConfBtnElem() {
