@@ -10,10 +10,10 @@ import static sberJazz.utils.CustomLocators.byDataTestId;
 public class VideoConferencePage {
     protected final WebDriver driver;
 
-    protected static final By conferenceName = byDataTestId("headerTitle");
-    protected static final By userName = byDataTestId("participantItem-0");
-    protected static final By exitConferenceBtn = byDataTestId("endButton");
-    protected static final By exitConfirmBtn = byDataTestId("exitMeeting");
+    private final By conferenceName = byDataTestId("headerTitle");
+    private final By userName = byDataTestId("participantItem-0");
+    private final By exitConferenceBtn = byDataTestId("endButton");
+    private final By exitConfirmBtn = byDataTestId("exitMeeting");
 
     public VideoConferencePage(WebDriver driver) {
         this.driver = driver;
@@ -38,6 +38,7 @@ public class VideoConferencePage {
     public String getConferenceName() {
         return driver.findElement(conferenceName).getText();
     }
+
     public String getUserName() {
         return driver.findElement(userName).getText();
     }

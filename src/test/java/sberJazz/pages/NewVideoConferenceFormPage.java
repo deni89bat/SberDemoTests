@@ -8,18 +8,17 @@ import org.openqa.selenium.WebElement;
 import static sberJazz.utils.CustomLocators.byDataTestId;
 
 public class NewVideoConferenceFormPage {
-    protected final WebDriver driver;
-    protected static final By formTitle = byDataTestId("title");
-    protected static final By userNameInput = byDataTestId("name");
-    protected static final By conferenceName = byDataTestId("confName");
-    protected static final By createConferenceBtn = byDataTestId("createConf");
+    private final WebDriver driver;
+    private final By formTitle = byDataTestId("title");
+    private final By userNameInput = byDataTestId("name");
+    private final By conferenceName = byDataTestId("confName");
+    private final By createConferenceBtn = byDataTestId("createConf");
 
 
     public NewVideoConferenceFormPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    //@Step("Получаем заголовок формы")
     public String getFormTitle() {
         return driver.findElement(formTitle).getText();
     }
@@ -31,7 +30,6 @@ public class NewVideoConferenceFormPage {
         return this;
     }
 
-    //@Step("Получаем значение из поля 'Ваше имя'")
     public String getUserName() {
         return driver.findElement(userNameInput).getAttribute("value");
     }
@@ -43,7 +41,6 @@ public class NewVideoConferenceFormPage {
         return this;
     }
 
-    //@Step("Получаем значение из поля 'Название конференции'")
     public String getConferenceName() {
         return driver.findElement(conferenceName).getAttribute("value");
     }

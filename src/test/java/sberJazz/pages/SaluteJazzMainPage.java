@@ -8,10 +8,10 @@ import org.openqa.selenium.WebElement;
 import static sberJazz.utils.CustomLocators.byDataTestId;
 
 public class SaluteJazzMainPage {
-    protected final WebDriver driver;
-    protected final By videoConferenceBtn = byDataTestId("startConf");
-    protected final By planConferenceBtn = byDataTestId("planConf");
-    protected final By joinToConferenceBtn = byDataTestId("joinConf");
+    private final WebDriver driver;
+    private final By videoConferenceBtn = byDataTestId("startConf");
+    private final By planConferenceBtn = byDataTestId("planConf");
+    private final By joinToConferenceBtn = byDataTestId("joinConf");
 
     public SaluteJazzMainPage(WebDriver driver) {
         this.driver = driver;
@@ -23,10 +23,11 @@ public class SaluteJazzMainPage {
 
     @Step("Пользователь нажимает кнопку 'Создать новую видеовстречу'")
     public NewVideoConferenceFormPage startVideoConference() {
-                driver.findElement(videoConferenceBtn).click();
+        driver.findElement(videoConferenceBtn).click();
 
         return new NewVideoConferenceFormPage(driver);
     }
+
     public SaluteJazzMainPage planVideoConference() {
         driver.findElement(planConferenceBtn).click();
         return this;

@@ -4,70 +4,65 @@ import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebElement;
 
+// когда будет много тестов, то планирую разбивать на подклассы buttons, fields и т.п. чтобы избежать антипаттерна God object (очень большой класс)
 public class CustomAssertions {
     @Step("Проверка, что заголовок страницы: {expectedTitle}")
-    protected void assertPageTitle(String expectedTitle, String actualTitle) {
+    public void assertPageTitle(String expectedTitle, String actualTitle) {
         Assertions.assertEquals(expectedTitle, actualTitle, "Заголовок страницы не совпадает");
     }
 
     @Step("Проверка, что элемент с текстом '{expectedText}' присутствует на странице")
-    protected void assertElementText(String expectedText, String actualText) {
+    public void assertElementText(String expectedText, String actualText) {
         Assertions.assertEquals(expectedText, actualText, "Текст элемента не совпадает");
     }
 
     @Step("Проверка, что элемент содержит текст '{expectedText}'")
-    protected void assertElementContainText(String expectedText, String actualText) {
-        Assertions.assertTrue(actualText.contains(expectedText),
-                "Элемент должен содержать текст: '" + expectedText + "', но фактический текст: '" + actualText + "'");
+    public void assertElementContainText(String expectedText, String actualText) {
+        Assertions.assertTrue(actualText.contains(expectedText), "Элемент должен содержать текст: '" + expectedText + "', но фактический текст: '" + actualText + "'");
     }
 
     @Step("Проверка, что значение поля '{fieldName}' равно '{expectedValue}'")
-    protected void assertFieldValue(String fieldName, String expectedValue, String actualValue) {
+    public void assertFieldValue(String fieldName, String expectedValue, String actualValue) {
         Assertions.assertEquals(expectedValue, actualValue, "Значение поля " + fieldName + " не совпадает");
     }
 
     @Step("Проверка, что элемент {element} отображается на странице {pageName}")
-    protected void assertElementIsDisplayed(WebElement element, String pageName) {
+    public void assertElementIsDisplayed(WebElement element, String pageName) {
         Assertions.assertTrue(element.isDisplayed(), "Элемент " + element.getText() + " не отображается на странице");
     }
 
     @Step("Проверка, что список содержит {expectedCount} элементов")
-    protected void assertListSize(int expectedCount, int actualCount) {
+    public void assertListSize(int expectedCount, int actualCount) {
         Assertions.assertEquals(expectedCount, actualCount, "Количество элементов в списке не совпадает");
     }
 
     @Step("Проверка, что значение {actualValue} не равно {unexpectedValue}")
-    protected void assertValueIsNotEqual(String actualValue, String unexpectedValue) {
+    public void assertValueIsNotEqual(String actualValue, String unexpectedValue) {
         Assertions.assertNotEquals(unexpectedValue, actualValue, "Значение не должно совпадать с " + unexpectedValue);
     }
 
     @Step("Проверка, что значение в поле 'Ваше имя' равно '{expectedName}'")
-    protected void assertUserName(String expectedName, String actualName) {
-        Assertions.assertEquals(expectedName, actualName,
-                "В поле 'Ваше имя' отображается неверное значение: " + actualName);
+    public void assertUserName(String expectedName, String actualName) {
+        Assertions.assertEquals(expectedName, actualName, "В поле 'Ваше имя' отображается неверное значение: " + actualName);
     }
 
     @Step("Проверка, что значение в поле 'Название встречи' равно '{expectedConferenceName}'")
-    protected void assertConferenceName(String expectedConferenceName, String actualConferenceName) {
-        Assertions.assertEquals(expectedConferenceName, actualConferenceName,
-                "В поле 'Название встречи' отображается неверное значение: " + actualConferenceName);
+    public void assertConferenceName(String expectedConferenceName, String actualConferenceName) {
+        Assertions.assertEquals(expectedConferenceName, actualConferenceName, "В поле 'Название встречи' отображается неверное значение: " + actualConferenceName);
     }
 
     @Step("Проверка, что заголовок формы: '{expectedFormTitle}'")
-    protected void assertFormTitle(String expectedFormTitle, String actualFormTitle) {
-        Assertions.assertEquals(expectedFormTitle, actualFormTitle,
-                "Пользователь видит неверный заголовок формы: " + actualFormTitle);
+    public void assertFormTitle(String expectedFormTitle, String actualFormTitle) {
+        Assertions.assertEquals(expectedFormTitle, actualFormTitle, "Пользователь видит неверный заголовок формы: " + actualFormTitle);
     }
 
     @Step("Проверка, что кнопка '{buttonName}' доступна")
-    protected void assertButtonIsEnabled(WebElement button, String buttonName) {
-        Assertions.assertFalse(button.getAttribute("disabled") != null,
-                "Кнопка '" + buttonName + "' должна быть доступна для нажатия");
+    public void assertButtonIsEnabled(WebElement button, String buttonName) {
+        Assertions.assertFalse(button.getAttribute("disabled") != null, "Кнопка '" + buttonName + "' должна быть доступна для нажатия");
     }
 
     @Step("Проверка, что кнопка '{buttonName}' недоступна")
-    protected void assertButtonIsDisabled(WebElement button, String buttonName) {
-        Assertions.assertTrue(button.getAttribute("disabled") != null,
-                "Кнопка '" + buttonName + "' должна быть недоступна для нажатия");
+    public void assertButtonIsDisabled(WebElement button, String buttonName) {
+        Assertions.assertTrue(button.getAttribute("disabled") != null, "Кнопка '" + buttonName + "' должна быть недоступна для нажатия");
     }
 }

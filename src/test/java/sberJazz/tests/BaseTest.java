@@ -1,4 +1,3 @@
-
 package sberJazz.tests;
 
 import com.codeborne.selenide.Screenshots;
@@ -37,13 +36,13 @@ public class BaseTest {
     protected WebDriver driver;
     protected SaluteJazzMainPage saluteJazzMainPage;
     UIProps props = ConfigFactory.create(UIProps.class);
-    public final String downloadFolder = System.getProperty("user.dir") + File.separator + "build" + File.separator + "downloadFiles";
+    final String downloadFolder = System.getProperty("user.dir") + File.separator + "build" + File.separator + "downloadFiles";
 
     @SneakyThrows
     @BeforeEach
     void setUp() {
         ChromeOptions options = createChromeOptions();
-        URL url = new URL("http://193.239.160.56:4444/wd/hub");
+        URL url = new URL(props.selenoidUrl());
         driver = new RemoteWebDriver(url, options);
         //driver = new ChromeDriver(options);      //Локальный запуск
         driver.manage().window().setSize(new Dimension(1920, 1080));
@@ -56,7 +55,6 @@ public class BaseTest {
 
     private ChromeOptions createChromeOptions() {
         ChromeOptions options = new ChromeOptions();
-
         // Настройка папки загрузок
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadFolder);
@@ -69,7 +67,7 @@ public class BaseTest {
     @AfterEach
     @Step("Сделать скриншот и закрыть драйвер")
     void tearDown() throws IOException {
-        takeScreenshot(driver);
+        takeScreenshot(driver); // на большом кол-ве тестов убрать, чтобы не забивать память. А тут для демонстрации в отчёте
         driver.quit();
     }
 

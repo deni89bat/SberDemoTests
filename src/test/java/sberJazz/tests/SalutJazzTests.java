@@ -23,30 +23,29 @@ public class SalutJazzTests extends BaseTest {
         String expectedConferenceName = "Встреча для теста";
         NewVideoConferenceFormPage videoConferenceFormPage;
 
-        customAssertions.assertPageTitle("SaluteJazz",
-                saluteJazzMainPage.getTitle());
+        String actualPageTitle = saluteJazzMainPage.getTitle();
+        customAssertions.assertPageTitle("SaluteJazz", actualPageTitle);
 
         videoConferenceFormPage = saluteJazzMainPage.startVideoConference();
-        customAssertions.assertFormTitle("Новая видеовстреча",
-                videoConferenceFormPage.getFormTitle());
-        customAssertions.assertButtonIsDisabled(videoConferenceFormPage.getCreateConfBtnElem(),
-                "Создать и присоединиться");
 
-        videoConferenceFormPage.setUserName(expectedUserName)
-                .setConferenceName(expectedConferenceName);
-        customAssertions.assertUserName(expectedUserName,
-                videoConferenceFormPage.getUserName());
-        customAssertions.assertConferenceName(expectedConferenceName,
-                videoConferenceFormPage.getConferenceName());
-        customAssertions.assertButtonIsEnabled(videoConferenceFormPage.getCreateConfBtnElem(),
-                "Создать и присоединиться");
+        String actualFormTitle = videoConferenceFormPage.getFormTitle();
+        customAssertions.assertFormTitle("Новая видеовстреча", actualFormTitle);
+        customAssertions.assertButtonIsDisabled(videoConferenceFormPage.getCreateConfBtnElem(), "Создать и присоединиться");
+
+        videoConferenceFormPage.setUserName(expectedUserName);
+        videoConferenceFormPage.setConferenceName(expectedConferenceName);
+
+        String actualUserNameText = videoConferenceFormPage.getUserName();
+        customAssertions.assertUserName(expectedUserName, actualUserNameText);
+        String actualConferenceNameText = videoConferenceFormPage.getConferenceName();
+        customAssertions.assertConferenceName(expectedConferenceName, actualConferenceNameText);
+        customAssertions.assertButtonIsEnabled(videoConferenceFormPage.getCreateConfBtnElem(), "Создать и присоединиться");
 
         videoConferencePage = videoConferenceFormPage.createAndJoin();
-        customAssertions.assertElementText(expectedConferenceName,
-                videoConferencePage.getConferenceName());
-        customAssertions.assertElementContainText(expectedUserName,
-                videoConferencePage.getUserName());
-        takeScreenshot(driver);
+        actualUserNameText = videoConferencePage.getUserName();
+        actualConferenceNameText = videoConferencePage.getConferenceName();
+        customAssertions.assertElementContainText(expectedUserName, actualUserNameText);
+        customAssertions.assertElementText(expectedConferenceName, actualConferenceNameText);
 
         isConferenceCreated = true;
     }
@@ -56,14 +55,12 @@ public class SalutJazzTests extends BaseTest {
     void exitConference() {
         if (isConferenceCreated) {
             if (videoConferencePage != null) {
-                videoConferencePage.endConference()
-                        .confirmEndConference();
+                videoConferencePage.endConference().confirmEndConference();
             }
             isConferenceCreated = false;
         }
         // Задержка после выполнения exitConference
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions
-                .visibilityOfElementLocated(saluteJazzMainPage.getVideoConferenceBtnLoc()));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(saluteJazzMainPage.getVideoConferenceBtnLoc()));
     }
 }
